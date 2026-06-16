@@ -1,8 +1,8 @@
-# 📦 Admin Panel - Manajemen Data
+# Admin Panel - Manajemen Data
 
 Aplikasi Admin Panel berbasis web untuk manajemen data **Category** dan **Product** menggunakan framework **NestJS** (TypeScript) dengan pola arsitektur **MVC (Model-View-Controller)**.
 
-## 📋 Deskripsi Project
+## Deskripsi Project
 
 Aplikasi ini adalah sebuah Admin Panel sederhana yang memiliki fitur:
 
@@ -15,99 +15,7 @@ Aplikasi ini adalah sebuah Admin Panel sederhana yang memiliki fitur:
 - **API Endpoint** - Endpoint JSON untuk testing di Postman
 - **Error Handling** - Penanganan error (NotFoundException)
 
-## 🗄️ Desain Database
-
-Aplikasi menggunakan **SQLite** sebagai database dengan 3 tabel:
-
-### Diagram Relasi
-
-```
-┌─────────────────┐       ┌─────────────────────┐
-│     users       │       │    categories        │
-├─────────────────┤       ├─────────────────────┤
-│ id (PK)         │       │ id (PK)              │
-│ username        │       │ name                 │
-│ password        │       │ description          │
-│ role            │       │ created_at           │
-└─────────────────┘       │ updated_at           │
-                          └──────────┬───────────┘
-                                     │ 1
-                                     │
-                                     │ * (One-to-Many)
-                                     │
-                          ┌──────────┴───────────┐
-                          │     products          │
-                          ├──────────────────────┤
-                          │ id (PK)               │
-                          │ name                  │
-                          │ description           │
-                          │ price                 │
-                          │ stock                 │
-                          │ category_id (FK)      │
-                          │ created_at            │
-                          │ updated_at            │
-                          └──────────────────────┘
-```
-
-### DBML (untuk dbdiagram.io)
-
-```dbml
-Table users {
-  id integer [primary key, increment]
-  username varchar [unique, not null]
-  password varchar [not null]
-  role varchar [default: 'admin']
-}
-
-Table categories {
-  id integer [primary key, increment]
-  name varchar [not null]
-  description text
-  created_at datetime [default: `now()`]
-  updated_at datetime [default: `now()`]
-}
-
-Table products {
-  id integer [primary key, increment]
-  name varchar [not null]
-  description text
-  price decimal(10,2) [default: 0]
-  stock integer [default: 0]
-  category_id integer [not null]
-  created_at datetime [default: `now()`]
-  updated_at datetime [default: `now()`]
-}
-
-Ref: products.category_id > categories.id [delete: cascade]
-```
-
-## 📸 Screenshot Aplikasi
-
-### Halaman Login
-![Login Page](screenshots/login.png)
-
-### Dashboard
-![Dashboard](screenshots/dashboard.png)
-
-### Daftar Category
-![Category List](screenshots/categories.png)
-
-### Detail Category (beserta Product di dalamnya)
-![Category Detail](screenshots/category-detail.png)
-
-### Daftar Product
-![Product List](screenshots/products.png)
-
-### Detail Product
-![Product Detail](screenshots/product-detail.png)
-
-### Form Tambah/Edit
-![Form](screenshots/form.png)
-
-### Error Handling (404)
-![Error](screenshots/error.png)
-
-## 🏗️ Struktur Project (MVC Pattern)
+## Struktur Project (MVC Pattern)
 
 ```
 manajemen_data/
@@ -159,7 +67,7 @@ manajemen_data/
 └── package.json
 ```
 
-## 🔧 Dependency
+## Dependency
 
 | Package | Versi | Keterangan |
 |---------|-------|------------|
@@ -173,7 +81,7 @@ manajemen_data/
 | `express-session` | latest | Session management untuk Login |
 | `bcryptjs` | latest | Hashing password |
 
-## 🚀 Cara Install & Menjalankan
+## Cara Install & Menjalankan
 
 ### Prasyarat
 - **Node.js** versi 18 atau lebih baru
@@ -203,7 +111,7 @@ Login menggunakan:
 - **Username:** `admin`
 - **Password:** `admin123`
 
-## 📡 API Endpoints (untuk Postman)
+## API Endpoints (untuk Postman)
 
 ### Auth
 | Method | Endpoint | Keterangan |
@@ -251,11 +159,11 @@ Login menggunakan:
 }
 ```
 
-## 🎥 Video Demo
+## Video Demo
 
-Link video demo: [Klik di sini](#) _(tambahkan link video)_
+Link video demo: [Klik di sini](#) *(tambahkan link video)*
 
-## 📝 Informasi Tambahan
+## Informasi Tambahan
 
 ### Pola MVC dalam Project ini
 
