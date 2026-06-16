@@ -1,98 +1,183 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Admin Panel - Manajemen Data
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Aplikasi Admin Panel berbasis web untuk manajemen data **Category** dan **Product** menggunakan framework **NestJS** (TypeScript) dengan pola arsitektur **MVC (Model-View-Controller)**.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Deskripsi Project
 
-## Description
+Aplikasi ini adalah sebuah Admin Panel sederhana yang memiliki fitur:
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- **Login** - Autentikasi user dengan session
+- **Dashboard** - Menampilkan ringkasan data
+- **CRUD Category** - Create, Read, Update, Delete data category
+- **CRUD Product** - Create, Read, Update, Delete data product
+- **Pencarian Data** - Fitur search pada halaman list
+- **Relasi One-to-Many** - Satu category memiliki banyak product
+- **API Endpoint** - Endpoint JSON untuk testing di Postman
+- **Error Handling** - Penanganan error (NotFoundException)
 
-## Project setup
+## Struktur Project (MVC Pattern)
 
-```bash
-$ npm install
+```
+manajemen_data/
+├── src/                          # Source Code
+│   ├── main.ts                   # Entry point & setup MVC
+│   ├── app.module.ts             # Root module & database config
+│   ├── auth/                     # Modul Autentikasi
+│   │   ├── auth.module.ts
+│   │   ├── auth.controller.ts    # (C) Controller Login/Logout
+│   │   └── auth.guard.ts         # Guard proteksi halaman
+│   ├── category/                 # Modul Category
+│   │   ├── category.entity.ts    # (M) Model/Entity Category
+│   │   ├── category.module.ts
+│   │   ├── category.service.ts   # Logika bisnis Category
+│   │   └── category.controller.ts # (C) Controller Category
+│   ├── product/                  # Modul Product
+│   │   ├── product.entity.ts     # (M) Model/Entity Product
+│   │   ├── product.module.ts
+│   │   ├── product.service.ts    # Logika bisnis Product
+│   │   └── product.controller.ts # (C) Controller Product
+│   ├── dashboard/                # Modul Dashboard
+│   │   ├── dashboard.module.ts
+│   │   └── dashboard.controller.ts # (C) Controller Dashboard
+│   ├── user/                     # Modul User
+│   │   ├── user.entity.ts        # (M) Model/Entity User
+│   │   ├── user.module.ts
+│   │   └── user.service.ts       # Logika bisnis User
+│   └── seed/                     # Modul Seed Data
+│       ├── seed.module.ts
+│       └── seed.service.ts       # Data awal otomatis
+├── views/                        # (V) View - Template EJS
+│   ├── partials/
+│   │   ├── header.ejs            # Header & Navbar
+│   │   └── footer.ejs            # Footer
+│   ├── login.ejs                 # Halaman Login
+│   ├── dashboard.ejs             # Halaman Dashboard
+│   ├── error.ejs                 # Halaman Error
+│   ├── categories/
+│   │   ├── index.ejs             # List Category
+│   │   ├── detail.ejs            # Detail Category
+│   │   └── form.ejs              # Form Tambah/Edit Category
+│   └── products/
+│       ├── index.ejs             # List Product
+│       ├── detail.ejs            # Detail Product
+│       └── form.ejs              # Form Tambah/Edit Product
+├── public/                       # File Statis
+│   └── css/
+│       └── style.css             # Stylesheet
+└── package.json
 ```
 
-## Compile and run the project
+## Dependency
+
+| Package | Versi | Keterangan |
+|---------|-------|------------|
+| `@nestjs/core` | ^11.0.1 | Core framework NestJS |
+| `@nestjs/common` | ^11.0.1 | Decorator dan utilitas umum |
+| `@nestjs/platform-express` | ^11.0.1 | HTTP platform Express |
+| `@nestjs/typeorm` | latest | Integrasi TypeORM dengan NestJS |
+| `typeorm` | latest | ORM untuk akses database |
+| `better-sqlite3` | latest | Driver SQLite |
+| `ejs` | latest | Template engine untuk View |
+| `express-session` | latest | Session management untuk Login |
+| `bcryptjs` | latest | Hashing password |
+
+## Cara Install & Menjalankan
+
+### Prasyarat
+- **Node.js** versi 18 atau lebih baru
+- **npm** (biasanya sudah terinstall bersama Node.js)
+
+### Langkah Install
 
 ```bash
-# development
-$ npm run start
+# 1. Clone repository
+git clone https://github.com/DeruDJ22/NestJS.git
 
-# watch mode
-$ npm run start:dev
+# 2. Masuk ke folder project
+cd NestJS
 
-# production mode
-$ npm run start:prod
+# 3. Install semua dependency
+npm install
+
+# 4. Jalankan aplikasi (mode development)
+npm run start:dev
 ```
 
-## Run tests
+### Akses Aplikasi
 
-```bash
-# unit tests
-$ npm run test
+Buka browser dan akses: **http://localhost:3000**
 
-# e2e tests
-$ npm run test:e2e
+Login menggunakan:
+- **Username:** `admin`
+- **Password:** `admin123`
 
-# test coverage
-$ npm run test:cov
+## API Endpoints (untuk Postman)
+
+### Auth
+| Method | Endpoint | Keterangan |
+|--------|----------|------------|
+| POST | `/login` | Login (form-data: username, password) |
+
+### Category API
+| Method | Endpoint | Keterangan |
+|--------|----------|------------|
+| GET | `/api/categories` | Ambil semua category |
+| GET | `/api/categories?search=keyword` | Cari category |
+| GET | `/api/categories/:id` | Ambil detail category |
+| POST | `/api/categories` | Tambah category baru |
+| PUT | `/api/categories/:id` | Update category |
+| DELETE | `/api/categories/:id` | Hapus category |
+
+### Product API
+| Method | Endpoint | Keterangan |
+|--------|----------|------------|
+| GET | `/api/products` | Ambil semua product |
+| GET | `/api/products?search=keyword` | Cari product |
+| GET | `/api/products/:id` | Ambil detail product |
+| POST | `/api/products` | Tambah product baru |
+| PUT | `/api/products/:id` | Update product |
+| DELETE | `/api/products/:id` | Hapus product |
+
+### Contoh Body Request (JSON) untuk Postman
+
+**Tambah Category:**
+```json
+{
+  "name": "Olahraga",
+  "description": "Peralatan olahraga dan fitness"
+}
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+**Tambah Product:**
+```json
+{
+  "name": "Sepatu Nike",
+  "description": "Sepatu lari Nike Air Max",
+  "price": 1500000,
+  "stock": 20,
+  "category_id": 1
+}
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+## Video Demo
 
-## Resources
+Link video demo: [Klik di sini](#) *(tambahkan link video)*
 
-Check out a few resources that may come in handy when working with NestJS:
+## Informasi Tambahan
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+### Pola MVC dalam Project ini
 
-## Support
+- **Model** → File `*.entity.ts` (mendefinisikan struktur tabel database)
+- **View** → File `*.ejs` di folder `views/` (template halaman HTML)
+- **Controller** → File `*.controller.ts` (mengatur routing dan menghubungkan Model dengan View)
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+### Error Handling
 
-## Stay in touch
+Aplikasi mengimplementasikan error handling menggunakan `NotFoundException` dari NestJS. Ketika data tidak ditemukan (misalnya mengakses Category/Product dengan ID yang tidak ada), aplikasi akan menampilkan halaman error 404 dengan pesan yang jelas.
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+### Catatan untuk Developer Selanjutnya
 
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+1. Database menggunakan **SQLite** sehingga tidak perlu setup server database terpisah. File database akan otomatis dibuat saat pertama kali menjalankan aplikasi.
+2. Opsi `synchronize: true` pada TypeORM akan otomatis membuat/mengupdate tabel. **Jangan gunakan di production**, gunakan migration sebagai gantinya.
+3. Data awal (seed) akan otomatis dibuat saat pertama kali menjalankan aplikasi melalui `SeedService`.
+4. Password user di-hash menggunakan **bcryptjs** sehingga aman tersimpan di database.

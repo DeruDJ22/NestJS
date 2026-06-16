@@ -1,0 +1,10 @@
+/* style.css - Optional custom overrides for Bootstrap */
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+.table-responsive {
+  border-radius: 6px;
+}
+.card {
+  transition: transform 0.2s, box-shadow 0.2s;
+}

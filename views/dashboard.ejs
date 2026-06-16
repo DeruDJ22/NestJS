@@ -1,0 +1,33 @@
+<%- include('partials/header') %>
+
+<div class="container">
+  <div class="row mb-4">
+    <div class="col-12">
+      <h2 class="fw-bold">Dashboard</h2>
+      <p class="text-muted">Selamat datang, <strong><%= username %></strong>! Berikut ringkasan data saat ini.</p>
+    </div>
+  </div>
+
+  <div class="row g-4">
+    <div class="col-md-6">
+      <div class="card shadow-sm border-0">
+        <div class="card-body p-4 text-center">
+          <h5 class="text-uppercase text-muted small fw-semibold mb-3">Total Categories</h5>
+          <div class="display-4 fw-bold text-primary mb-3"><%= totalCategories %></div>
+          <a href="/categories" class="btn btn-primary">Lihat Data</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card shadow-sm border-0">
+        <div class="card-body p-4 text-center">
+          <h5 class="text-uppercase text-muted small fw-semibold mb-3">Total Products</h5>
+          <div class="display-4 fw-bold text-primary mb-3"><%= totalProducts %></div>
+          <a href="/products" class="btn btn-primary">Lihat Data</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('partials/footer') %>
